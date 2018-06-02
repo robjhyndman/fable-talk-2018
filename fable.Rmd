@@ -39,7 +39,9 @@ set.seed(28052018)
 options(digits=3)
 ```
 
-# forecast package
+# Why change?
+
+## forecast package
 \fontsize{13}{14.5}\sf
 
 \hspace*{-0.6cm}\begin{tabular}{rl}
@@ -64,13 +66,13 @@ April 2018       & \textcolor{orange}{v8.3}. Added \textbf{mstl}\\
 June 2018        & $\approx$ 100,000 package downloads per month
 \end{tabular}
 
-# fable package
+## fable package
 
 \begin{alertblock}{}
 A replacement for the forecast package.
 \end{alertblock}
 
-## Why change?
+### Why change?
 \fontsize{13}{14}\sf
 
  * Interacting with tidyverse packages
@@ -86,13 +88,14 @@ A replacement for the forecast package.
  * Opportunity to re-think forecasting practice
 
 # Example: Australian eating-out expenditure
+## Example: Australian eating-out expenditure
 \fontsize{11}{11}\sf
 
 ```{r auscafe1, echo=TRUE}
 fpp2::auscafe
 ```
 
-# Example: Australian eating-out expenditure
+## Example: Australian eating-out expenditure
 \fontsize{11}{11}\sf
 
 ```{r auscafe2, echo=TRUE}
@@ -101,7 +104,7 @@ cafe <- as_tsibble(fpp2::auscafe)
 cafe
 ```
 
-# Example: Australian eating-out expenditure
+## Example: Australian eating-out expenditure
 \fontsize{11}{11}\sf
 
 ```{r auscafe3, echo=TRUE, dependson='auscafe2'}
@@ -111,7 +114,7 @@ cafe %>% ETS(value)
 
 \vspace*{10cm}
 
-# Example: Australian eating-out expenditure
+## Example: Australian eating-out expenditure
 \fontsize{10}{10}\sf
 
 ```{r auscafe4, echo=TRUE, dependson='auscafe2'}
@@ -120,7 +123,7 @@ cafe %>% ETS(value) %>% summary()
 
 \vspace*{10cm}
 
-# Example: Australian eating-out expenditure
+## Example: Australian eating-out expenditure
 \fontsize{11}{11}\sf
 
 ```{r auscafe5, echo=TRUE, dependson='auscafe2'}
@@ -129,7 +132,7 @@ cafe %>% ETS(value) %>% forecast()
 
 \vspace*{10cm}
 
-# Example: Australian eating-out expenditure
+## Example: Australian eating-out expenditure
 \fontsize{12}{12}\sf
 
 ```{r auscafe6, echo=TRUE, dependson='auscafe2'}
@@ -139,7 +142,7 @@ cafe %>% ETS(value) %>% forecast() %>%
 
 \vspace*{10cm}
 
-# Example: Australian eating-out expenditure
+## Example: Australian eating-out expenditure
 \fontsize{12}{12}\sf
 
 ```{r auscafe6a, echo=TRUE, dependson='auscafe2'}
@@ -149,7 +152,7 @@ cafe %>% ETS(value) %>% forecast() %>%
 
 \vspace*{10cm}
 
-# Example: Australian eating-out expenditure
+## Example: Australian eating-out expenditure
 \fontsize{11}{11}\sf
 
 ```{r auscafe7, echo=TRUE, dependson='auscafe2', fig.height=4}
@@ -158,7 +161,7 @@ cafe %>% ETS(value) %>% forecast() %>% autoplot()
 
 \vspace*{10cm}
 
-# Example: Australian eating-out expenditure
+## Example: Australian eating-out expenditure
 \fontsize{11}{11}\sf
 
 ```{r auscafe8, echo=TRUE, dependson='auscafe2'}
@@ -167,13 +170,15 @@ cafe %>% ARIMA(log(value)) %>%
 ```
 
 # Example: Australian prison population
+
+## Example: Australian prison population
 \fontsize{11}{13}\sf
 
 ```{r prison1}
 fpp2::prisonLF
 ```
 
-# Example: Australian prison population
+## Example: Australian prison population
 \fontsize{11}{13}\sf
 
 ```{r prison2}
@@ -184,14 +189,14 @@ prison <- fpp2::prisonLF %>%
 prison
 ```
 
-# Example: Australian prison population
+## Example: Australian prison population
 \fontsize{10}{13}\sf
 
 ```{r prison3, dependson='prison2'}
 prison %>% ETS(count)
 ```
 
-# Example: Australian prison population
+## Example: Australian prison population
 \fontsize{8}{12}\sf
 
 ```{r prison4, dependson='prison2'}
@@ -203,6 +208,7 @@ prison %>% ETS(count) %>% forecast()
 Aggregation and reconciliation not yet implemented.
 
 # Example: Half-hourly electricity demand
+## Example: Half-hourly electricity demand
 \fontsize{11}{14}\sf
 
 ```{r elecdemandsetup, echo=FALSE}
@@ -213,7 +219,7 @@ elecdemand <- as_tsibble(fpp2::elecdemand) %>%
 ```{r elecdemand1, dependson="elecdemandsetup"}
 elecdemand
 ```
-# Example: Half-hourly electricity demand
+## Example: Half-hourly electricity demand
 \fontsize{10}{10}\sf
 
 ```{r elecdemand2, dependson="elecdemandsetup"}
@@ -223,7 +229,8 @@ elecdemand
 # forecast(fit1) %>% autoplot()
 ```
 
-# Equivalent methods: forecast $\longrightarrow$ fable
+# Equivalent methods
+## Equivalent methods: forecast $\longrightarrow$ fable
 
   * `auto.arima` $\longrightarrow$ `ARIMA`
   * `ets` $\longrightarrow$ `ETS`
@@ -232,12 +239,12 @@ elecdemand
   * `nnetar` $\longrightarrow$ `NNETAR`
   * `stlm` $\longrightarrow$ `STL %>% modelcomponents(ETS(seasadj),`\newline\hspace*{4.4cm}`SNAIVE(season))`
 
-##
+###
  * All functions have a formula interface with automatic modelling if no formula provided.
  * All functions produce `mable` class objects.
  * Some of these functions not yet implemented
 
-# Equivalent methods: forecast $\longrightarrow$ fable
+## Equivalent methods: forecast $\longrightarrow$ fable
 \fontsize{14}{15}\sf
 
   * `naive` $\longrightarrow$ `NAIVE %>% forecast`
@@ -250,10 +257,14 @@ elecdemand
   * `splinef` $\longrightarrow$ `SPLINE %>% forecast`
   * `croston` $\longrightarrow$ `CROSTON %>% forecast`
 
-##
+###
  * `forecast` produces `fable` class objects.
 
-# Download
+# More information
+
+## More information
+
+### Download
 \fontsize{12.8}{15}\sf
 
 ```r
@@ -261,11 +272,11 @@ devtools::install_github("tidyverts/tsibble")
 devtools::install_github("tidyverts/fable")
 ```
 
-# NUMBATS
+### Follow our progress
+ * tidyverts.org
+ * robjhyndman.com/hyndsight
 
-\centerline{\includegraphics[width=13cm]{Numbat}}\vspace*{-0.7cm}
-
-\begin{block}{}
+###
 \fontsize{11}{11}\sf
 \centering\begin{tabular}{p{3.35cm}p{3.cm}p{3.5cm}}
 \includegraphics[height=3.25cm]{dicook} &
@@ -273,14 +284,4 @@ devtools::install_github("tidyverts/fable")
 \includegraphics[height=3cm]{mitch}\\
 Di Cook & Earo Wang  & Mitchell O'Hara-Wild
 \end{tabular}
-\end{block}
-
-\vspace*{10cm}
-
-# More information
-\LARGE
-
-tidyverts.org
-
-robjhyndman.com/hyndsight
 
