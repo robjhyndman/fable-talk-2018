@@ -88,8 +88,7 @@ A replacement for the forecast package.
 \fontsize{11}{11}\sf
 
 ```{r auscafe1, echo=TRUE}
-library(fpp2)
-auscafe
+fpp2::auscafe
 ```
 
 # Example: Australian eating-out expenditure
@@ -97,7 +96,7 @@ auscafe
 
 ```{r auscafe2, echo=TRUE}
 library(tsibble)
-cafe <- as_tsibble(auscafe)
+cafe <- as_tsibble(fpp2::auscafe)
 cafe
 ```
 
@@ -142,8 +141,7 @@ cafe %>% ETS(value) %>% forecast() %>% summary()
 \fontsize{11}{11}\sf
 
 ```{r auscafe7, echo=TRUE, dependson='auscafe2'}
-#cafe %>% ETS(value) %>% forecast() %>% autoplot()
-## Currently not working
+cafe %>% ETS(value) %>% forecast() %>% autoplot()
 ```
 
 \vspace*{10cm}
