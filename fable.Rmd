@@ -71,7 +71,7 @@ A replacement for the forecast package.
 \end{alertblock}
 
 ## Why change?
-\fontsize{14}{15.5}\sf
+\fontsize{13}{14}\sf
 
  * Interacting with tidyverse packages
  * Sub-daily data and multiple seasonal data handled more easily
