@@ -198,19 +198,25 @@ Aggregation and reconciliation not yet implemented.
 
   * `auto.arima` $\longrightarrow$ `ARIMA`
   * `ets` $\longrightarrow$ `ETS`
+  * `tslm`/`lm` $\longrightarrow$ `LM(y ~ x1 + x2)`
   * `tbats`  $\longrightarrow$ `TBATS`
-  * `stlm` $\longrightarrow$ `STL???`
+  * `nnetar` $\longrightarrow$ `NNETAR`
+  * `stlm` $\longrightarrow$ `STL` ????
 
-All modelling functions produce `mable` class objects.
+
+All functions have a formula interface with automatic modelling if no formula provided.
+
+All functions produce `mable` class objects.
 
 # Equivalent methods
 
-  * `stlf` $\longrightarrow$ `STL %>% forecast`
-  * `thetaf` $\longrightarrow$ ??
+  * `naive` $\longrightarrow$ `NAIVE %>% forecast`
+  * `snaive` $\longrightarrow$  `SNAIVE %>% forecast`
+  * `thetaf` $\longrightarrow$ `THETA` %>% `forecast`
+  * `stlf` $\longrightarrow$ `STL %>% forecast` ???
   * `dshw`, `hw`, `holt`, `ses` ??
   * `splinef` $\longrightarrow$ ??
-  * `rwf`, `naive` $\longrightarrow$ `RW %>% forecast`
-  * `croston` $\longrightarrow$
+  * `croston` $\longrightarrow$ ??
 
 `forecast` produces `fable` class objects.
 
