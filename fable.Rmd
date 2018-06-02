@@ -130,10 +130,21 @@ cafe %>% ETS(value) %>% forecast()
 \vspace*{10cm}
 
 # Example: Australian eating-out expenditure
-\fontsize{11}{11}\sf
+\fontsize{12}{12}\sf
 
 ```{r auscafe6, echo=TRUE, dependson='auscafe2'}
-cafe %>% ETS(value) %>% forecast() %>% summary()
+cafe %>% ETS(value) %>% forecast() %>%
+  summary()
+```
+
+\vspace*{10cm}
+
+# Example: Australian eating-out expenditure
+\fontsize{12}{12}\sf
+
+```{r auscafe6a, echo=TRUE, dependson='auscafe2'}
+cafe %>% ETS(value) %>% forecast() %>%
+  summary(level=90)
 ```
 
 \vspace*{10cm}
