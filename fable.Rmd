@@ -77,6 +77,8 @@ A replacement for the forecast package.
  * Sub-daily data and multiple seasonal data handled more easily
  * Consistency of interface
  * Distribution forecasting rather than point+interval
+ * Flexible transformations
+ * Extensibility
  * Simpler interface for hierarchical and grouped forecast reconciliation
  * Designed for forecasting many related time series
  * Changes will break too much existing code
