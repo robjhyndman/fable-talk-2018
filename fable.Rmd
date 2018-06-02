@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
   echo=TRUE,
   message=FALSE,
   warning=FALSE,
-  cache=FALSE,
+  cache=TRUE,
   dev.args=list(bg=grey(0.9), pointsize=11)
 )
 savepdf <- function(file, width=16, height=16*4.33/6)
@@ -78,14 +78,14 @@ A replacement for the forecast package.
  * Consistency of interface
  * Distribution forecasting rather than point+interval
  * Simpler interface for hierarchical and grouped forecast reconciliation
- * Designed for multivariate forecasting
+ * Designed for forecasting many related time series
  * Changes will break too much existing code
  * Opportunity to re-think forecasting practice
 
 # Example: Australian eating-out expenditure
 \fontsize{11}{11}\sf
 
-```{r auscafe, echo=TRUE}
+```{r auscafe1, echo=TRUE}
 library(fpp2)
 auscafe
 ```
@@ -102,9 +102,8 @@ cafe
 # Example: Australian eating-out expenditure
 \fontsize{11}{11}\sf
 
-```{r auscafe3, echo=TRUE}
-#library(fable)
-library(tidyforecast)
+```{r auscafe3, echo=TRUE, dependson='auscafe2'}
+library(fable)
 cafe %>% ETS(value)
 ```
 
@@ -113,7 +112,7 @@ cafe %>% ETS(value)
 # Example: Australian eating-out expenditure
 \fontsize{11}{11}\sf
 
-```{r auscafe4a, echo=TRUE}
+```{r auscafe4, echo=TRUE, dependson='auscafe2'}
 cafe %>% ETS(value) %>% summary()
 ```
 
@@ -122,7 +121,7 @@ cafe %>% ETS(value) %>% summary()
 # Example: Australian eating-out expenditure
 \fontsize{11}{11}\sf
 
-```{r auscafe4, echo=TRUE}
+```{r auscafe5, echo=TRUE, dependson='auscafe2'}
 cafe %>% ETS(value) %>% forecast()
 ```
 
@@ -131,7 +130,7 @@ cafe %>% ETS(value) %>% forecast()
 # Example: Australian eating-out expenditure
 \fontsize{11}{11}\sf
 
-```{r auscafe5, echo=TRUE}
+```{r auscafe6, echo=TRUE, dependson='auscafe2'}
 cafe %>% ETS(value) %>% forecast() %>% summary()
 ```
 
@@ -140,38 +139,66 @@ cafe %>% ETS(value) %>% forecast() %>% summary()
 # Example: Australian eating-out expenditure
 \fontsize{11}{11}\sf
 
-```{r auscafe6, echo=TRUE}
-cafe %>% ARIMA(log(value)) %>% 
+```{r auscafe7, echo=TRUE, dependson='auscafe2'}
+#cafe %>% ETS(value) %>% forecast() %>% autoplot()
+## Currently not working
+```
+
+\vspace*{10cm}
+
+# Example: Australian eating-out expenditure
+\fontsize{11}{11}\sf
+
+```{r auscafe8, echo=TRUE, dependson='auscafe2'}
+cafe %>% ARIMA(log(value)) %>%
   forecast() %>% summary()
 ```
 
 # Example: prison data
-\fontsize{11}{11}\sf
+\fontsize{11}{13}\sf
 
-```{r prison}
+```{r prison1}
 prisonLF
 ```
 
 
 # Example: prison data
-\fontsize{11}{11}\sf
+\fontsize{11}{13}\sf
 
 ```{r prison2}
-prisonLF %>% 
+prison <- prisonLF %>%
   mutate(qtr=yearquarter(t)) %>%
   select(-t) %>%
   as_tsibble(index=qtr, key=id(state,gender,legal))
+prison
 ```
 
 
-# Reconcilation?
+# Example: prison data
+\fontsize{10}{13}\sf
+
+```{r prison3, dependson='prison2'}
+prison %>% ETS(count)
+```
+
+
+# Example: prison data
+\fontsize{8}{12}\sf
+
+```{r prison4, dependson='prison2'}
+prison %>% ETS(count) %>% forecast()
+```
+
+\fontsize{12}{13}\sf
+###
+Aggregation and reconciliation not yet implemented.
 
 
 # Equivalent methods
 
   * `auto.arima` $\longrightarrow$ `ARIMA`
   * `ets` $\longrightarrow$ `ETS`
-  * `tbats`  $\longrightarrow$ `TBATS` 
+  * `tbats`  $\longrightarrow$ `TBATS`
   * `stlm` $\longrightarrow$ `STL???`
 
 All modelling functions produce `mable` class objects.
