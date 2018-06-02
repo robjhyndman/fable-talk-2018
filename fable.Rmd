@@ -112,7 +112,7 @@ cafe %>% ETS(value)
 \vspace*{10cm}
 
 # Example: Australian eating-out expenditure
-\fontsize{11}{11}\sf
+\fontsize{10}{10}\sf
 
 ```{r auscafe4, echo=TRUE, dependson='auscafe2'}
 cafe %>% ETS(value) %>% summary()
@@ -141,7 +141,7 @@ cafe %>% ETS(value) %>% forecast() %>% summary()
 # Example: Australian eating-out expenditure
 \fontsize{11}{11}\sf
 
-```{r auscafe7, echo=TRUE, dependson='auscafe2'}
+```{r auscafe7, echo=TRUE, dependson='auscafe2', fig.height=4}
 cafe %>% ETS(value) %>% forecast() %>% autoplot()
 ```
 
