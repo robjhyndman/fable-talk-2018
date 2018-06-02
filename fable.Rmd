@@ -202,6 +202,27 @@ prison %>% ETS(count) %>% forecast()
 ###
 Aggregation and reconciliation not yet implemented.
 
+# Example: Half-hourly electricity demand
+\fontsize{11}{14}\sf
+
+```{r elecdemandsetup, echo=FALSE}
+elecdemand <- as_tsibble(fpp2::elecdemand) %>%
+  spread(key, value)
+```
+
+```{r elecdemand1, dependson="elecdemandsetup"}
+elecdemand
+```
+# Example: Half-hourly electricity demand
+\fontsize{10}{10}\sf
+
+```{r elecdemand2, dependson="elecdemandsetup"}
+# fit1 <- TBATS(elecdemand, Demand)
+# fit2 <- ARIMA(elecdemand,
+#  Demand ~ Temperature + I(Temperature^2) + Workday)
+# forecast(fit1) %>% autoplot()
+```
+
 # Equivalent methods: forecast $\longrightarrow$ fable
 
   * `auto.arima` $\longrightarrow$ `ARIMA`
