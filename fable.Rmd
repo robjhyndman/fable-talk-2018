@@ -79,7 +79,8 @@ A replacement for the forecast package.
  * Distribution forecasting rather than point+interval
  * Flexible transformations
  * Extensibility
- * Simpler interface for hierarchical and grouped forecast reconciliation
+ * Simpler interface for forecast reconciliation
+ * Boosting, combining and ensemble forecasts
  * Designed for forecasting many related time series
  * Changes will break too much existing code
  * Opportunity to re-think forecasting practice
