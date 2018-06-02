@@ -154,35 +154,32 @@ cafe %>% ARIMA(log(value)) %>%
   forecast() %>% summary()
 ```
 
-# Example: prison data
+# Example: Australian prison population
 \fontsize{11}{13}\sf
 
 ```{r prison1}
-prisonLF
+fpp2::prisonLF
 ```
 
-
-# Example: prison data
+# Example: Australian prison population
 \fontsize{11}{13}\sf
 
 ```{r prison2}
-prison <- prisonLF %>%
+prison <- fpp2::prisonLF %>%
   mutate(qtr=yearquarter(t)) %>%
   select(-t) %>%
   as_tsibble(index=qtr, key=id(state,gender,legal))
 prison
 ```
 
-
-# Example: prison data
+# Example: Australian prison population
 \fontsize{10}{13}\sf
 
 ```{r prison3, dependson='prison2'}
 prison %>% ETS(count)
 ```
 
-
-# Example: prison data
+# Example: Australian prison population
 \fontsize{8}{12}\sf
 
 ```{r prison4, dependson='prison2'}
