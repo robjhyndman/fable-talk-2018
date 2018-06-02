@@ -190,36 +190,38 @@ prison %>% ETS(count) %>% forecast()
 ###
 Aggregation and reconciliation not yet implemented.
 
-
-# Equivalent methods
+# Equivalent methods: forecast $\longrightarrow$ fable
 
   * `auto.arima` $\longrightarrow$ `ARIMA`
   * `ets` $\longrightarrow$ `ETS`
-  * `tslm`/`lm` $\longrightarrow$ `LM(y ~ x1 + x2)`
+  * `tslm`/`lm` $\longrightarrow$ `LM`
   * `tbats`  $\longrightarrow$ `TBATS`
   * `nnetar` $\longrightarrow$ `NNETAR`
-  * `stlm` $\longrightarrow$ `STL` ????
+  * `stlm` $\longrightarrow$ `STL %>% modelcomponents(ETS(seasadj),`\newline\hspace*{4.4cm}`SNAIVE(season))`
 
+##
+ * All functions have a formula interface with automatic modelling if no formula provided.
+ * All functions produce `mable` class objects.
+ * Some of these functions not yet implemented
 
-All functions have a formula interface with automatic modelling if no formula provided.
-
-All functions produce `mable` class objects.
-
-# Equivalent methods
+# Equivalent methods: forecast $\longrightarrow$ fable
+\fontsize{14}{15}\sf
 
   * `naive` $\longrightarrow$ `NAIVE %>% forecast`
   * `snaive` $\longrightarrow$  `SNAIVE %>% forecast`
   * `thetaf` $\longrightarrow$ `THETA` %>% `forecast`
-  * `stlf` $\longrightarrow$ `STL %>% forecast` ???
-  * `dshw`, `hw`, `holt`, `ses` ??
-  * `splinef` $\longrightarrow$ ??
-  * `croston` $\longrightarrow$ ??
+  * `stlf` $\longrightarrow$ `STL %>% modelcomponents(ETS(seasadj),`\newline\hspace*{4.4cm}`SNAIVE(season)) %>% forecast`
+  * `hw` $\longrightarrow$ `HW %>% forecast`
+  * `holt` $\longrightarrow$ `HOLT %>% forecast`
+  * `ses` $\longrightarrow$ `SES %>% forecast`
+  * `splinef` $\longrightarrow$ `SPLINE %>% forecast`
+  * `croston` $\longrightarrow$ `CROSTON %>% forecast`
 
-`forecast` produces `fable` class objects.
+##
+ * `forecast` produces `fable` class objects.
 
 # Download
 \fontsize{12.8}{15}\sf
-
 
 ```r
 devtools::install_github("tidyverts/tsibble")
@@ -227,7 +229,6 @@ devtools::install_github("tidyverts/fable")
 ```
 
 # NUMBATS
-
 
 \centerline{\includegraphics[width=13cm]{Numbat}}\vspace*{-0.7cm}
 
