@@ -246,9 +246,7 @@ Di Cook & Earo Wang  & Mitchell O'Hara-Wild
 # More information
 \LARGE
 
-robjhyndman.com
-
-OTexts.org/fpp2
-
 tidyverts.org
+
+robjhyndman.com/hyndsight
 
