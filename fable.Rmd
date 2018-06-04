@@ -277,18 +277,16 @@ summary(fit2)
 # More information
 
 ## More information
-
-### Download
 \fontsize{12.8}{15}\sf
+\placefig{8}{.1}{width=1.7cm}{tsibblesticker}
+\placefig{10}{.1}{width=1.7cm}{fablesticker}
+\vspace*{.5cm}
 
+###
 ```r
 devtools::install_github("tidyverts/tsibble")
 devtools::install_github("tidyverts/fable")
 ```
-
-### Follow our progress
- * tidyverts.org
- * robjhyndman.com/hyndsight
 
 ###
 \fontsize{11}{11}\sf
@@ -299,3 +297,7 @@ devtools::install_github("tidyverts/fable")
 Di Cook & Earo Wang  & Mitchell O'Hara-Wild
 \end{tabular}
 
+
+### Follow our progress
+  * `tidyverts.org`
+  * `robjhyndman.com/hyndsight`
