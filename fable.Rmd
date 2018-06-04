@@ -8,6 +8,7 @@ output:
     fig_height: 4.33
     fig_width: 6
     highlight: tango
+    keep_tex: no
     incremental: no
     theme: metropolis
     includes:
@@ -38,6 +39,7 @@ endpdf <- function()
 set.seed(28052018)
 options(digits=3)
 ```
+
 
 # Why change?
 
@@ -234,12 +236,17 @@ summary(fit2)
 # Equivalent methods
 ## Equivalent methods: forecast $\longrightarrow$ fable
 
-  * `auto.arima` $\longrightarrow$ `ARIMA`
-  * `ets` $\longrightarrow$ `ETS`
-  * `tslm`/`lm` $\longrightarrow$ `LM`
-  * `tbats`  $\longrightarrow$ `TBATS`
-  * `nnetar` $\longrightarrow$ `NNETAR`
-  * `stlm` $\longrightarrow$ `STL %>% modelcomponents(ETS(seasadj),`\newline\hspace*{4.4cm}`SNAIVE(season))`
+\hspace*{-0.7cm}\begin{tabular}{l@{~$\longrightarrow$~}p{8cm}}
+\texttt{auto.arima} & \texttt{ARIMA} \\
+\texttt{ets} & \texttt{ETS} \\
+\texttt{tslm/lm} & \texttt{LM} \\
+\texttt{tbats} & \texttt{TBATS} \\
+\texttt{nnetar} & \texttt{NNETAR} \\
+\texttt{stlm} & \texttt{STL \%>\%} \par
+ \hspace*{0.2cm}\texttt{modelcomponents(} \par
+ \hspace*{0.6cm}\texttt{ETS(seasadj),SNAIVE(season))}
+\end{tabular}
+
 
 ###
  * All functions have a formula interface with automatic modelling if no formula provided.
@@ -249,15 +256,20 @@ summary(fit2)
 ## Equivalent methods: forecast $\longrightarrow$ fable
 \fontsize{14}{15}\sf
 
-  * `naive` $\longrightarrow$ `NAIVE %>% forecast`
-  * `snaive` $\longrightarrow$  `SNAIVE %>% forecast`
-  * `thetaf` $\longrightarrow$ `THETA` %>% `forecast`
-  * `stlf` $\longrightarrow$ `STL %>% modelcomponents(ETS(seasadj),`\newline\hspace*{4.4cm}`SNAIVE(season)) %>% forecast`
-  * `hw` $\longrightarrow$ `HW %>% forecast`
-  * `holt` $\longrightarrow$ `HOLT %>% forecast`
-  * `ses` $\longrightarrow$ `SES %>% forecast`
-  * `splinef` $\longrightarrow$ `SPLINE %>% forecast`
-  * `croston` $\longrightarrow$ `CROSTON %>% forecast`
+\hspace*{-0.7cm}\begin{tabular}{l@{~$\longrightarrow$~}p{10cm}}
+\texttt{naive} &  \texttt{NAIVE \%>\% forecast} \\
+\texttt{snaive} &  \texttt{SNAIVE \%>\% forecast} \\
+\texttt{thetaf} &  \texttt{THETA \%>\% forecast} \\
+\texttt{stlf} &  \texttt{STL \%>\%} \par
+ \hspace*{0.3cm}\texttt{modelcomponents(} \par
+ \hspace*{0.6cm}\texttt{ETS(seasadj),SNAIVE(season)) \%>\%} \par
+ \hspace*{0.3cm}\texttt{forecast} \\
+\texttt{hw} &  \texttt{HW \%>\% forecast} \\
+\texttt{holt} & \texttt{HOLT \%>\% forecast} \\
+\texttt{ses} &  \texttt{SES \%>\% forecast} \\
+\texttt{splinef} & \texttt{SPLINE \%>\% forecast} \\
+\texttt{croston} & \texttt{CROSTON \%>\% forecast}
+\end{tabular}
 
 ###
  * `forecast` produces `fable` class objects.
