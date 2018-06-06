@@ -44,7 +44,7 @@ options(digits=3)
 # Why change?
 
 ## forecast package
-\fontsize{13}{14.5}\sf
+\fontsize{13}{14}\sf
 
 \hspace*{-0.6cm}\begin{tabular}{rl}
 Pre 2003         & Private functions used for consulting projects \\
