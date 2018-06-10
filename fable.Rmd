@@ -225,12 +225,10 @@ elecdemand
 \fontsize{10}{10}\sf
 
 ```{r elecdemand2, dependson="elecdemandsetup"}
-# fit1 <- TBATS(elecdemand, Demand)
 fit2 <- ARIMA(elecdemand,
   Demand ~ Temperature + I(Temperature^2) + WorkDay)
 summary(fit2)
-#forecast(fit2) %>% autoplot()
-# How to specify future regressors?
+#forecast(fit2) %>% autoplot(newdata=elecdemandfuture)
 ```
 
 # Equivalent methods
