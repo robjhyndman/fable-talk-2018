@@ -37,7 +37,7 @@ endpdf <- function()
 #  crop::dev.off.crop(fname)
 }
 set.seed(28052018)
-options(digits=3)
+options(digits=3,width=60)
 ```
 
 
