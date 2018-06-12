@@ -37,7 +37,7 @@ endpdf <- function()
 #  crop::dev.off.crop(fname)
 }
 set.seed(28052018)
-options(digits=3)
+options(digits=3,width=60)
 ```
 
 
@@ -76,30 +76,25 @@ A replacement for the forecast package.
 \end{alertblock}
 
 ### Why change?
-\fontsize{13}{14}\sf
 
  * Interacting with tidyverse packages
  * Sub-daily data and multiple seasonal data handled more easily
  * Consistency of interface
- * Distribution forecasting rather than point+interval
+ * Distribution forecasting rather than point + interval
  * Flexible transformations
- * Extensibility
- * Simpler interface for forecast reconciliation
- * Boosting, combining and ensemble forecasts
  * Designed for forecasting many related time series
- * Changes will break too much existing code
- * Opportunity to re-think forecasting practice
+ * Simpler interface for forecast reconciliation
 
 # Example: Australian eating-out expenditure
 ## Example: Australian eating-out expenditure
-\fontsize{11}{11}\sf
+\fontsize{10}{10}\sf
 
 ```{r auscafe1, echo=TRUE}
 fpp2::auscafe
 ```
 
 ## Example: Australian eating-out expenditure
-\fontsize{11}{11}\sf
+\fontsize{12}{12}\sf
 
 ```{r auscafe2, echo=TRUE}
 library(tsibble)
@@ -202,8 +197,17 @@ prison %>% ETS(count)
 ## Example: Australian prison population
 \fontsize{8}{12}\sf
 
-```{r prison4, dependson='prison2'}
+```{r width1, include=FALSE}
+options(width=80)
+```
+
+```{r prison4, dependson=c('prison2','width1')}
 prison %>% ETS(count) %>% forecast()
+```
+
+
+```{r width2, include=FALSE}
+options(width=60)
 ```
 
 \fontsize{12}{13}\sf
@@ -223,13 +227,15 @@ elecdemand <- as_tsibble(fpp2::elecdemand) %>%
 elecdemand
 ```
 ## Example: Half-hourly electricity demand
-\fontsize{10}{10}\sf
+\fontsize{10}{9.5}\sf
 
 ```{r elecdemand2, dependson="elecdemandsetup"}
 fit2 <- ARIMA(elecdemand,
   Demand ~ Temperature + I(Temperature^2) + WorkDay)
 summary(fit2)
-#forecast(fit2) %>% autoplot(newdata=elecdemandfuture)
+```
+```r
+forecast(fit2, newdata=elecdemandfuture) %>% autoplot()
 ```
 
 # Equivalent methods
