@@ -77,12 +77,12 @@ A replacement for the forecast package.
 
 ### Why change?
 
- * Interacting with tidyverse packages
- * Sub-daily data and multiple seasonal data handled more easily
- * Consistency of interface
+ * Integrating with tidyverse packages
+ * Designed for forecasting many related time series
+ * Consistency of interface using formulas
  * Distribution forecasting rather than point + interval
  * Flexible transformations
- * Designed for forecasting many related time series
+ * Sub-daily data and multiple seasonal data handled more easily
  * Simpler interface for forecast reconciliation
 
 # Example: Australian eating-out expenditure
@@ -248,7 +248,7 @@ forecast(fit2, newdata=elecdemandfuture) %>% autoplot()
 \texttt{ets} & \texttt{ETS} \\
 \texttt{tslm/lm} & \texttt{LM} \\
 \texttt{tbats} & \texttt{TBATS} \\
-\texttt{nnetar} & \texttt{NNETAR} \\
+\texttt{nnetar} & \texttt{NNAR} \\
 \texttt{stlm} & \texttt{STL \%>\%} \par
  \hspace*{0.2cm}\texttt{modelcomponents(} \par
  \hspace*{0.6cm}\texttt{ETS(seasadj),SNAIVE(season))}
