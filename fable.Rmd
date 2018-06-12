@@ -188,17 +188,19 @@ prison
 ```
 
 ## Example: Australian prison population
-\fontsize{10}{13}\sf
+\fontsize{9}{11}\sf
 
 ```{r prison3, dependson='prison2'}
 prison %>% ETS(count)
 ```
 
+\vspace*{10cm}
+
 ## Example: Australian prison population
-\fontsize{8}{12}\sf
+\fontsize{9}{11}\sf
 
 ```{r width1, include=FALSE}
-options(width=81)
+options(width=151)
 ```
 
 ```{r prison4, dependson=c('prison2','width1')}
