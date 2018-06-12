@@ -69,6 +69,7 @@ June 2018        & $\approx$ 100,000 package downloads per month
 \end{tabular}
 
 ## fable package
+\placefig{10}{.1}{width=1.7cm}{fablesticker}
 
 \begin{alertblock}{}
 A replacement for the forecast package.
