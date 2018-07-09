@@ -281,6 +281,21 @@ forecast(fit2, newdata=elecdemandfuture) %>% autoplot()
 ###
  * `forecast` produces `fable` class objects.
 
+# Extensibility
+
+## Extending fable
+
+### Tools to easily create new fable models
+ * Easily create specials for model formulae
+ * Focus on model estimation and forecasts
+ 
+### Automatically supported fable functionality
+ * Transformations and back-transformations (with bias adjustments)
+ * Prediction intervals
+ * Plotting tools
+ * Accuracy measures and evaluation
+ * Model combinations (hierarchies & ensembles)
+
 # More information
 
 ## More information
