@@ -167,6 +167,30 @@ cafe %>% ARIMA(log(value)) %>%
   forecast() %>% summary()
 ```
 
+# Example: Half-hourly electricity demand
+## Example: Half-hourly electricity demand
+\fontsize{11}{14}\sf
+
+```{r elecdemandsetup, echo=FALSE}
+elecdemand <- as_tsibble(fpp2::elecdemand) %>%
+  spread(key, value)
+```
+
+```{r elecdemand1, dependson="elecdemandsetup"}
+elecdemand
+```
+## Example: Half-hourly electricity demand
+\fontsize{10}{9.5}\sf
+
+```{r elecdemand2, dependson="elecdemandsetup"}
+fit2 <- ARIMA(elecdemand,
+  Demand ~ Temperature + I(Temperature^2) + WorkDay)
+summary(fit2)
+```
+```r
+forecast(fit2, newdata=elecdemandfuture) %>% autoplot()
+```
+
 # Example: Australian prison population
 
 ## Example: Australian prison population
@@ -215,30 +239,6 @@ options(width=60)
 \fontsize{12}{13}\sf
 ###
 Aggregation and reconciliation not yet implemented.
-
-# Example: Half-hourly electricity demand
-## Example: Half-hourly electricity demand
-\fontsize{11}{14}\sf
-
-```{r elecdemandsetup, echo=FALSE}
-elecdemand <- as_tsibble(fpp2::elecdemand) %>%
-  spread(key, value)
-```
-
-```{r elecdemand1, dependson="elecdemandsetup"}
-elecdemand
-```
-## Example: Half-hourly electricity demand
-\fontsize{10}{9.5}\sf
-
-```{r elecdemand2, dependson="elecdemandsetup"}
-fit2 <- ARIMA(elecdemand,
-  Demand ~ Temperature + I(Temperature^2) + WorkDay)
-summary(fit2)
-```
-```r
-forecast(fit2, newdata=elecdemandfuture) %>% autoplot()
-```
 
 # Equivalent methods
 ## Equivalent methods: forecast $\longrightarrow$ fable
