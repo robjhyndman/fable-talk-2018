@@ -7,6 +7,7 @@ output:
   beamer_presentation:
     fig_height: 4.33
     fig_width: 6
+    fig_caption: false
     highlight: tango
     keep_tex: no
     incremental: no
@@ -84,6 +85,41 @@ A replacement for the forecast package.
  * Flexible transformations
  * Sub-daily data and multiple seasonal data handled more easily
  * Simpler interface for forecast reconciliation
+
+# Model specification with fable
+
+## Formula model specification
+```{r etshelp, eval = FALSE, echo = TRUE}
+?ets
+```
+
+![](figs/ets.png)
+
+## Formula model specification
+```{r arimahelp, eval = FALSE, echo = TRUE}
+?auto.arima
+```
+
+![](figs/arima.png)
+
+## Formula model specification
+\fontsize{12}{12}\sf
+
+To simplify model building, we use a model formula.
+This should be more familiar to those who have done regression modelling.
+
+```{r, eval = FALSE, echo = TRUE}
+t(y) ~ {model specification}
+```
+
+### LHS: Response
+* Defines the response variable from the data
+* Specification of transformations
+  (which are automatically back-transformed)
+
+### RHS: Specials
+* Model specific special functions
+* Exogenous regressors (if supported by model)
 
 # Example: Australian eating-out expenditure
 ## Example: Australian eating-out expenditure
