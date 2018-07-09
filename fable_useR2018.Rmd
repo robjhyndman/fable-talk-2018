@@ -107,7 +107,7 @@ cafe
 
 ```{r auscafe3, echo=TRUE, dependson='auscafe2'}
 library(fable)
-cafe %>% ETS(value)
+cafe %>% ARIMA(log(value))
 ```
 
 \vspace*{10cm}
@@ -116,7 +116,7 @@ cafe %>% ETS(value)
 \fontsize{10}{10}\sf
 
 ```{r auscafe4, echo=TRUE, dependson='auscafe2'}
-cafe %>% ETS(value) %>% summary()
+cafe %>% ARIMA(log(value)) %>% summary()
 ```
 
 \vspace*{10cm}
@@ -125,7 +125,7 @@ cafe %>% ETS(value) %>% summary()
 \fontsize{11}{11}\sf
 
 ```{r auscafe5, echo=TRUE, dependson='auscafe2'}
-cafe %>% ETS(value) %>% forecast()
+cafe %>% ARIMA(log(value)) %>% forecast()
 ```
 
 \vspace*{10cm}
@@ -134,7 +134,7 @@ cafe %>% ETS(value) %>% forecast()
 \fontsize{12}{12}\sf
 
 ```{r auscafe6, echo=TRUE, dependson='auscafe2'}
-cafe %>% ETS(value) %>% forecast() %>%
+cafe %>% ARIMA(log(value)) %>% forecast() %>%
   summary()
 ```
 
@@ -144,7 +144,7 @@ cafe %>% ETS(value) %>% forecast() %>%
 \fontsize{12}{12}\sf
 
 ```{r auscafe6a, echo=TRUE, dependson='auscafe2'}
-cafe %>% ETS(value) %>% forecast() %>%
+cafe %>% ARIMA(log(value)) %>% forecast() %>%
   summary(level=90)
 ```
 
@@ -154,18 +154,10 @@ cafe %>% ETS(value) %>% forecast() %>%
 \fontsize{11}{11}\sf
 
 ```{r auscafe7, echo=TRUE, dependson='auscafe2', fig.height=4}
-cafe %>% ETS(value) %>% forecast() %>% autoplot()
+cafe %>% ARIMA(log(value)) %>% forecast() %>% autoplot()
 ```
 
 \vspace*{10cm}
-
-## Example: Australian eating-out expenditure
-\fontsize{11}{11}\sf
-
-```{r auscafe8, echo=TRUE, dependson='auscafe2'}
-cafe %>% ARIMA(log(value)) %>%
-  forecast() %>% summary()
-```
 
 # Example: Half-hourly electricity demand
 ## Example: Half-hourly electricity demand
