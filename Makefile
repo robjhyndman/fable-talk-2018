@@ -1,19 +1,15 @@
-# Usually, only this line needs changing
-PRESENTATION := fable
+PDFS:=$(patsubst %.Rmd,%.pdf,$(wildcard *.Rmd))
+TEXS:=$(patsubst %.Rmd,%.tex,$(wildcard *.Rmd))
+TEXFILES:=$(wildcard *.tex) $(wildcard *.sty) $(wildcard *.cls)
 
-# Source files
-RFILES := $(wildcard *.R) $(wildcard *.rda)
-TEXFILES := $(wildcard *.tex) $(wildcard *.sty) $(wildcard *.cls)
+all: $(PDFS)
 
-all: $(PRESENTATION).pdf
-.PHONY: all
-
-$(PRESENTATION).pdf : $(PRESENTATION).Rmd $(RFILES) $(TEXFILES)
-	Rscript -e "rmarkdown::render('$<')"
+%.pdf: %.Rmd $(TEXFILES)
+	Rscript -e "rmarkdown::render('$*.Rmd')"
 
 clean:
-	rm -fv $(PRESENTATION).pdf
 	latexmk -c
-	rm -fv $(PRESENTATION).tex
-	rm -rf $(PRESENTATION)_cache
-	rm -rf $(PRESENTATION)_files
+	rm -fv *.pdf
+	rm -fv *.tex
+	rm -rf *_cache
+	rm -rf *_files

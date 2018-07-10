@@ -243,7 +243,7 @@ forecast(fit2, newdata=elecdemandfuture) %>% autoplot()
 # Equivalent methods
 ## Equivalent methods: forecast $\longrightarrow$ fable
 
-\hspace*{-0.7cm}\begin{tabular}{l@{~$\longrightarrow$~}p{8cm}}
+\hspace*{-0.2cm}\begin{tabular}{l@{~$\longrightarrow$~}p{8cm}}
 \texttt{auto.arima} & \texttt{ARIMA} \\
 \texttt{ets} & \texttt{ETS} \\
 \texttt{tslm/lm} & \texttt{LM} \\
@@ -263,7 +263,7 @@ forecast(fit2, newdata=elecdemandfuture) %>% autoplot()
 ## Equivalent methods: forecast $\longrightarrow$ fable
 \fontsize{14}{15}\sf
 
-\hspace*{-0.7cm}\begin{tabular}{l@{~$\longrightarrow$~}p{10cm}}
+\hspace*{-0.2cm}\begin{tabular}{l@{~$\longrightarrow$~}p{10cm}}
 \texttt{naive} &  \texttt{NAIVE \%>\% forecast} \\
 \texttt{snaive} &  \texttt{SNAIVE \%>\% forecast} \\
 \texttt{thetaf} &  \texttt{THETA \%>\% forecast} \\

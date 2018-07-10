@@ -1,7 +1,7 @@
 ---
 title: "Tidy Forecasting\\newline in R"
 author: "Rob J Hyndman"
-date: "ISF 2018"
+date: "useR2018"
 fontsize: 14pt
 output:
   beamer_presentation:
@@ -89,24 +89,8 @@ A replacement for the forecast package.
 # Model specification with fable
 
 ## Formula model specification
-```{r etshelp, eval = FALSE, echo = TRUE}
-?ets
-```
 
-![](figs/ets.png)
-
-## Formula model specification
-```{r arimahelp, eval = FALSE, echo = TRUE}
-?auto.arima
-```
-
-![](figs/arima.png)
-
-## Formula model specification
-\fontsize{12}{12}\sf
-
-To simplify model building, we use a model formula.
-This should be more familiar to those who have done regression modelling.
+All modelling functions use a formula similar to `lm()` with automated modelling if RHS not specified.
 
 ```{r, eval = FALSE, echo = TRUE}
 t(y) ~ {model specification}
@@ -122,24 +106,19 @@ t(y) ~ {model specification}
 * Exogenous regressors (if supported by model)
 
 # Example: Australian eating-out expenditure
+
 ## Example: Australian eating-out expenditure
 \fontsize{10}{10}\sf
 
-```{r auscafe1, echo=TRUE}
-fpp2::auscafe
-```
-
-## Example: Australian eating-out expenditure
-\fontsize{12}{12}\sf
-
 ```{r auscafe2, echo=TRUE}
 library(tsibble)
-cafe <- as_tsibble(fpp2::auscafe)
-cafe
+(cafe <- as_tsibble(fpp2::auscafe))
 ```
 
+\vspace*{10cm}
+
 ## Example: Australian eating-out expenditure
-\fontsize{11}{11}\sf
+\fontsize{10}{10}\sf
 
 ```{r auscafe3, echo=TRUE, dependson='auscafe2'}
 library(fable)
@@ -158,7 +137,7 @@ cafe %>% ARIMA(log(value)) %>% summary()
 \vspace*{10cm}
 
 ## Example: Australian eating-out expenditure
-\fontsize{11}{11}\sf
+\fontsize{10}{10}\sf
 
 ```{r auscafe5, echo=TRUE, dependson='auscafe2'}
 cafe %>% ARIMA(log(value)) %>% forecast()
@@ -167,29 +146,27 @@ cafe %>% ARIMA(log(value)) %>% forecast()
 \vspace*{10cm}
 
 ## Example: Australian eating-out expenditure
-\fontsize{12}{12}\sf
+\fontsize{10}{10}\sf
 
 ```{r auscafe6, echo=TRUE, dependson='auscafe2'}
-cafe %>% ARIMA(log(value)) %>% forecast() %>%
-  summary()
+cafe %>% ARIMA(log(value)) %>% forecast() %>% summary()
 ```
 
 \vspace*{10cm}
 
 ## Example: Australian eating-out expenditure
-\fontsize{12}{12}\sf
+\fontsize{10}{10}\sf
 
 ```{r auscafe6a, echo=TRUE, dependson='auscafe2'}
-cafe %>% ARIMA(log(value)) %>% forecast() %>%
-  summary(level=90)
+cafe %>% ARIMA(log(value)) %>% forecast() %>% summary(level=90)
 ```
 
 \vspace*{10cm}
 
 ## Example: Australian eating-out expenditure
-\fontsize{11}{11}\sf
+\fontsize{10}{10}\sf
 
-```{r auscafe7, echo=TRUE, dependson='auscafe2', fig.height=4}
+```{r auscafe7, echo=TRUE, dependson='auscafe2', fig.height=3.8}
 cafe %>% ARIMA(log(value)) %>% forecast() %>% autoplot()
 ```
 
@@ -197,7 +174,7 @@ cafe %>% ARIMA(log(value)) %>% forecast() %>% autoplot()
 
 # Example: Half-hourly electricity demand
 ## Example: Half-hourly electricity demand
-\fontsize{11}{14}\sf
+\fontsize{10}{10}\sf
 
 ```{r elecdemandsetup, echo=FALSE}
 elecdemand <- as_tsibble(fpp2::elecdemand) %>%
@@ -207,6 +184,9 @@ elecdemand <- as_tsibble(fpp2::elecdemand) %>%
 ```{r elecdemand1, dependson="elecdemandsetup"}
 elecdemand
 ```
+
+\vspace*{10cm}
+
 ## Example: Half-hourly electricity demand
 \fontsize{10}{9.5}\sf
 
@@ -222,14 +202,14 @@ forecast(fit2, newdata=elecdemandfuture) %>% autoplot()
 # Example: Australian prison population
 
 ## Example: Australian prison population
-\fontsize{11}{13}\sf
+\fontsize{10}{10}\sf
 
 ```{r prison1}
 fpp2::prisonLF
 ```
 
 ## Example: Australian prison population
-\fontsize{11}{13}\sf
+\fontsize{10}{10}\sf
 
 ```{r prison2}
 prison <- fpp2::prisonLF %>%
@@ -240,7 +220,7 @@ prison
 ```
 
 ## Example: Australian prison population
-\fontsize{9}{11}\sf
+\fontsize{10}{10}\sf
 
 ```{r prison3, dependson='prison2'}
 prison %>% ETS(count)
@@ -249,10 +229,10 @@ prison %>% ETS(count)
 \vspace*{10cm}
 
 ## Example: Australian prison population
-\fontsize{9}{11}\sf
+\fontsize{10}{10}\sf
 
 ```{r width1, include=FALSE}
-options(width=151)
+options(width=150)
 ```
 
 ```{r prison4, dependson=c('prison2','width1')}
@@ -271,7 +251,7 @@ Aggregation and reconciliation not yet implemented.
 # Equivalent methods
 ## Equivalent methods: forecast $\longrightarrow$ fable
 
-\hspace*{-0.7cm}\begin{tabular}{l@{~$\longrightarrow$~}p{8cm}}
+\hspace*{-0.2cm}\begin{tabular}{l@{~$\longrightarrow$~}p{8cm}}
 \texttt{auto.arima} & \texttt{ARIMA} \\
 \texttt{ets} & \texttt{ETS} \\
 \texttt{tslm/lm} & \texttt{LM} \\
@@ -291,7 +271,7 @@ Aggregation and reconciliation not yet implemented.
 ## Equivalent methods: forecast $\longrightarrow$ fable
 \fontsize{14}{15}\sf
 
-\hspace*{-0.7cm}\begin{tabular}{l@{~$\longrightarrow$~}p{10cm}}
+\hspace*{-0.2cm}\begin{tabular}{l@{~$\longrightarrow$~}p{10cm}}
 \texttt{naive} &  \texttt{NAIVE \%>\% forecast} \\
 \texttt{snaive} &  \texttt{SNAIVE \%>\% forecast} \\
 \texttt{thetaf} &  \texttt{THETA \%>\% forecast} \\
@@ -314,13 +294,13 @@ Aggregation and reconciliation not yet implemented.
 ## Extending fable
 
 \begin{alertblock}{}
-fable simplifies the times-series model development process
+fable simplifies the time series model development process
 \end{alertblock}
 
 ### Tools to easily create new fable models
  * Easily create specials for model formulae
  * Focus on model estimation and forecasts
- 
+
 ### Automatically supported fable functionality
  * Transformations and back-transformations (with bias adjustments)
  * Plotting tools
