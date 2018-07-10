@@ -1,0 +1,356 @@
+---
+title: "Tidy Forecasting\\newline in R"
+author: "Rob J Hyndman"
+date: "ISF 2018"
+fontsize: 14pt
+output:
+  beamer_presentation:
+    fig_height: 4.33
+    fig_width: 6
+    fig_caption: false
+    highlight: tango
+    keep_tex: no
+    incremental: no
+    theme: metropolis
+    includes:
+      in_header: preamble.tex
+editor_options:
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo=TRUE,
+  message=FALSE,
+  warning=FALSE,
+  cache=TRUE,
+  dev.args=list(bg=grey(0.9), pointsize=11)
+)
+savepdf <- function(file, width=16, height=16*4.33/6)
+{
+  fname <<- paste("figs/",file,".pdf",sep="")
+  pdf(fname, width=width/2.54, height=height/2.54, pointsize=10)
+  par(mgp=c(2.2,0.45,0), tcl=-0.4, mar=c(3.3,3.6,1.1,1.1))
+}
+endpdf <- function()
+{
+  dev.off()
+#  crop::dev.off.crop(fname)
+}
+set.seed(28052018)
+options(digits=3,width=60)
+```
+
+
+# Why change?
+
+## forecast package
+\fontsize{13}{14}\sf
+
+\hspace*{-0.6cm}\begin{tabular}{rl}
+Pre 2003         & Private functions used for consulting projects \\
+July/August 2003 & \textbf{ets} and \textbf{thetaf} added\\
+%2003--2006      & Package available at robjhyndman.com \\
+August 2006      & \textcolor{orange}{v1.0} available on CRAN \\
+May 2007         & \textbf{auto.arima} added\\
+%July 2008       & JSS paper (Hyndman \& Khandakar)\\
+%September 2009  & \textcolor{orange}{v2.0}. Unbundled \\
+May 2010         & \textbf{arfima} added\\
+Feb/March 2011   & \textbf{tslm}, \textbf{stlf}, \textbf{naive}, \textbf{snaive} added \\
+August 2011      & \textcolor{orange}{v3.0}. Box Cox transformations added\\
+December 2011    & \textbf{tbats} added\\
+April 2012       & Package moved to github\\
+November 2012    & \textcolor{orange}{v4.0}. \textbf{nnetar} added\\
+June 2013        & Major speed-up of \textbf{ets}\\
+%December 2015   & 264,000 package downloads in one month!\\
+February 2016    & \textcolor{orange}{v7.0}. Added ggplot2 graphics\\
+February 2017    & \textcolor{orange}{v8.0}. Added \textbf{checkresiduals}, \textbf{tsCV} and \textbf{\%>\%}\\
+April 2018       & \textcolor{orange}{v8.3}. Added \textbf{mstl}\\
+June 2018        & $\approx$ 100,000 package downloads per month
+\end{tabular}
+
+## fable package
+\placefig{10}{.1}{width=1.7cm}{fablesticker}
+
+\begin{alertblock}{}
+A replacement for the forecast package.
+\end{alertblock}
+
+### Why change?
+
+ * Integrating with tidyverse packages
+ * Designed for forecasting many related time series
+ * Consistency of interface using formulas
+ * Distribution forecasting rather than point + interval
+ * Flexible transformations
+ * Sub-daily data and multiple seasonal data handled more easily
+ * Simpler interface for forecast reconciliation
+
+# Model specification with fable
+
+## Formula model specification
+```{r etshelp, eval = FALSE, echo = TRUE}
+?ets
+```
+
+![](figs/ets.png)
+
+## Formula model specification
+```{r arimahelp, eval = FALSE, echo = TRUE}
+?auto.arima
+```
+
+![](figs/arima.png)
+
+## Formula model specification
+\fontsize{12}{12}\sf
+
+To simplify model building, we use a model formula.
+This should be more familiar to those who have done regression modelling.
+
+```{r, eval = FALSE, echo = TRUE}
+t(y) ~ {model specification}
+```
+
+### LHS: Response
+* Defines the response variable from the data
+* Specification of transformations
+  (which are automatically back-transformed)
+
+### RHS: Specials
+* Model specific special functions
+* Exogenous regressors (if supported by model)
+
+# Example: Australian eating-out expenditure
+## Example: Australian eating-out expenditure
+\fontsize{10}{10}\sf
+
+```{r auscafe1, echo=TRUE}
+fpp2::auscafe
+```
+
+## Example: Australian eating-out expenditure
+\fontsize{12}{12}\sf
+
+```{r auscafe2, echo=TRUE}
+library(tsibble)
+cafe <- as_tsibble(fpp2::auscafe)
+cafe
+```
+
+## Example: Australian eating-out expenditure
+\fontsize{11}{11}\sf
+
+```{r auscafe3, echo=TRUE, dependson='auscafe2'}
+library(fable)
+cafe %>% ARIMA(log(value))
+```
+
+\vspace*{10cm}
+
+## Example: Australian eating-out expenditure
+\fontsize{10}{10}\sf
+
+```{r auscafe4, echo=TRUE, dependson='auscafe2'}
+cafe %>% ARIMA(log(value)) %>% summary()
+```
+
+\vspace*{10cm}
+
+## Example: Australian eating-out expenditure
+\fontsize{11}{11}\sf
+
+```{r auscafe5, echo=TRUE, dependson='auscafe2'}
+cafe %>% ARIMA(log(value)) %>% forecast()
+```
+
+\vspace*{10cm}
+
+## Example: Australian eating-out expenditure
+\fontsize{12}{12}\sf
+
+```{r auscafe6, echo=TRUE, dependson='auscafe2'}
+cafe %>% ARIMA(log(value)) %>% forecast() %>%
+  summary()
+```
+
+\vspace*{10cm}
+
+## Example: Australian eating-out expenditure
+\fontsize{12}{12}\sf
+
+```{r auscafe6a, echo=TRUE, dependson='auscafe2'}
+cafe %>% ARIMA(log(value)) %>% forecast() %>%
+  summary(level=90)
+```
+
+\vspace*{10cm}
+
+## Example: Australian eating-out expenditure
+\fontsize{11}{11}\sf
+
+```{r auscafe7, echo=TRUE, dependson='auscafe2', fig.height=4}
+cafe %>% ARIMA(log(value)) %>% forecast() %>% autoplot()
+```
+
+\vspace*{10cm}
+
+# Example: Half-hourly electricity demand
+## Example: Half-hourly electricity demand
+\fontsize{11}{14}\sf
+
+```{r elecdemandsetup, echo=FALSE}
+elecdemand <- as_tsibble(fpp2::elecdemand) %>%
+  spread(key, value)
+```
+
+```{r elecdemand1, dependson="elecdemandsetup"}
+elecdemand
+```
+## Example: Half-hourly electricity demand
+\fontsize{10}{9.5}\sf
+
+```{r elecdemand2, dependson="elecdemandsetup"}
+fit2 <- ARIMA(elecdemand,
+  Demand ~ Temperature + I(Temperature^2) + WorkDay)
+summary(fit2)
+```
+```r
+forecast(fit2, newdata=elecdemandfuture) %>% autoplot()
+```
+
+# Example: Australian prison population
+
+## Example: Australian prison population
+\fontsize{11}{13}\sf
+
+```{r prison1}
+fpp2::prisonLF
+```
+
+## Example: Australian prison population
+\fontsize{11}{13}\sf
+
+```{r prison2}
+prison <- fpp2::prisonLF %>%
+  mutate(qtr=yearquarter(t)) %>%
+  select(-t) %>%
+  as_tsibble(index=qtr, key=id(state,gender,legal))
+prison
+```
+
+## Example: Australian prison population
+\fontsize{9}{11}\sf
+
+```{r prison3, dependson='prison2'}
+prison %>% ETS(count)
+```
+
+\vspace*{10cm}
+
+## Example: Australian prison population
+\fontsize{9}{11}\sf
+
+```{r width1, include=FALSE}
+options(width=151)
+```
+
+```{r prison4, dependson=c('prison2','width1')}
+prison %>% ETS(count) %>% forecast()
+```
+
+
+```{r width2, include=FALSE}
+options(width=60)
+```
+
+\fontsize{12}{13}\sf
+###
+Aggregation and reconciliation not yet implemented.
+
+# Equivalent methods
+## Equivalent methods: forecast $\longrightarrow$ fable
+
+\hspace*{-0.7cm}\begin{tabular}{l@{~$\longrightarrow$~}p{8cm}}
+\texttt{auto.arima} & \texttt{ARIMA} \\
+\texttt{ets} & \texttt{ETS} \\
+\texttt{tslm/lm} & \texttt{LM} \\
+\texttt{tbats} & \texttt{TBATS} \\
+\texttt{nnetar} & \texttt{NNAR} \\
+\texttt{stlm} & \texttt{STL \%>\%} \par
+ \hspace*{0.2cm}\texttt{modelcomponents(} \par
+ \hspace*{0.6cm}\texttt{ETS(seasadj),SNAIVE(season))}
+\end{tabular}
+
+
+###
+ * All functions have a formula interface with automatic modelling if no formula provided.
+ * All functions produce `mable` class objects.
+ * Some of these functions not yet implemented
+
+## Equivalent methods: forecast $\longrightarrow$ fable
+\fontsize{14}{15}\sf
+
+\hspace*{-0.7cm}\begin{tabular}{l@{~$\longrightarrow$~}p{10cm}}
+\texttt{naive} &  \texttt{NAIVE \%>\% forecast} \\
+\texttt{snaive} &  \texttt{SNAIVE \%>\% forecast} \\
+\texttt{thetaf} &  \texttt{THETA \%>\% forecast} \\
+\texttt{stlf} &  \texttt{STL \%>\%} \par
+ \hspace*{0.3cm}\texttt{modelcomponents(} \par
+ \hspace*{0.6cm}\texttt{ETS(seasadj),SNAIVE(season)) \%>\%} \par
+ \hspace*{0.3cm}\texttt{forecast} \\
+\texttt{hw} &  \texttt{HW \%>\% forecast} \\
+\texttt{holt} & \texttt{HOLT \%>\% forecast} \\
+\texttt{ses} &  \texttt{SES \%>\% forecast} \\
+\texttt{splinef} & \texttt{SPLINE \%>\% forecast} \\
+\texttt{croston} & \texttt{CROSTON \%>\% forecast}
+\end{tabular}
+
+###
+ * `forecast` produces `fable` class objects.
+
+# Extensibility
+
+## Extending fable
+
+\begin{alertblock}{}
+fable simplifies the times-series model development process
+\end{alertblock}
+
+### Tools to easily create new fable models
+ * Easily create specials for model formulae
+ * Focus on model estimation and forecasts
+ 
+### Automatically supported fable functionality
+ * Transformations and back-transformations (with bias adjustments)
+ * Plotting tools
+ * Accuracy measures and evaluation
+ * Model combinations (hierarchies & ensembles)
+
+# More information
+
+## More information
+\fontsize{12.8}{15}\sf
+\placefig{8}{.1}{width=1.7cm}{tsibblesticker}
+\placefig{10}{.1}{width=1.7cm}{fablesticker}
+\vspace*{.5cm}
+
+###
+```r
+devtools::install_github("tidyverts/tsibble")
+devtools::install_github("tidyverts/fable")
+```
+
+###
+\fontsize{11}{11}\sf
+\centering\begin{tabular}{p{3.35cm}p{3.cm}p{3.5cm}}
+\includegraphics[height=3.25cm]{dicook} &
+\includegraphics[height=3cm]{earowang} &
+\includegraphics[height=3cm]{mitch}\\
+Di Cook & Earo Wang  & Mitchell O'Hara-Wild
+\end{tabular}
+
+
+### Follow our progress
+  * `tidyverts.org`
+  * `robjhyndman.com/hyndsight`
