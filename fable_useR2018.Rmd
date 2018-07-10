@@ -18,6 +18,7 @@ editor_options:
   chunk_output_type: console
 ---
 
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   echo=TRUE,
@@ -122,7 +123,7 @@ library(tsibble)
 
 ```{r auscafe3, echo=TRUE, dependson='auscafe2'}
 library(fable)
-cafe %>% ARIMA(log(value))
+cafe %>% ARIMA(log(value) ~ pdq(2,1,1) + PDQ(2,1,2))
 ```
 
 \vspace*{10cm}
@@ -131,7 +132,8 @@ cafe %>% ARIMA(log(value))
 \fontsize{10}{10}\sf
 
 ```{r auscafe4, echo=TRUE, dependson='auscafe2'}
-cafe %>% ARIMA(log(value)) %>% summary()
+cafe %>% ARIMA(log(value) ~ pdq(2,1,1) + PDQ(2,1,2)) %>%
+  summary()
 ```
 
 \vspace*{10cm}
@@ -140,7 +142,8 @@ cafe %>% ARIMA(log(value)) %>% summary()
 \fontsize{10}{10}\sf
 
 ```{r auscafe5, echo=TRUE, dependson='auscafe2'}
-cafe %>% ARIMA(log(value)) %>% forecast()
+cafe %>% ARIMA(log(value) ~ pdq(2,1,1) + PDQ(2,1,2)) %>%
+  forecast()
 ```
 
 \vspace*{10cm}
@@ -149,7 +152,8 @@ cafe %>% ARIMA(log(value)) %>% forecast()
 \fontsize{10}{10}\sf
 
 ```{r auscafe6, echo=TRUE, dependson='auscafe2'}
-cafe %>% ARIMA(log(value)) %>% forecast() %>% summary()
+cafe %>% ARIMA(log(value) ~ pdq(2,1,1) + PDQ(2,1,2)) %>%
+  forecast() %>% summary()
 ```
 
 \vspace*{10cm}
@@ -158,7 +162,8 @@ cafe %>% ARIMA(log(value)) %>% forecast() %>% summary()
 \fontsize{10}{10}\sf
 
 ```{r auscafe6a, echo=TRUE, dependson='auscafe2'}
-cafe %>% ARIMA(log(value)) %>% forecast() %>% summary(level=90)
+cafe %>% ARIMA(log(value) ~ pdq(2,1,1) + PDQ(2,1,2)) %>%
+  forecast() %>% summary(level=90)
 ```
 
 \vspace*{10cm}
@@ -166,8 +171,9 @@ cafe %>% ARIMA(log(value)) %>% forecast() %>% summary(level=90)
 ## Example: Australian eating-out expenditure
 \fontsize{10}{10}\sf
 
-```{r auscafe7, echo=TRUE, dependson='auscafe2', fig.height=3.8}
-cafe %>% ARIMA(log(value)) %>% forecast() %>% autoplot()
+```{r auscafe7, echo=TRUE, dependson='auscafe2', fig.height=3.4}
+cafe %>% ARIMA(log(value) ~ pdq(2,1,1) + PDQ(2,1,2)) %>%
+  forecast() %>% autoplot()
 ```
 
 \vspace*{10cm}
@@ -204,18 +210,14 @@ forecast(fit2, newdata=elecdemandfuture) %>% autoplot()
 ## Example: Australian prison population
 \fontsize{10}{10}\sf
 
-```{r prison1}
-fpp2::prisonLF
-```
-
-## Example: Australian prison population
-\fontsize{10}{10}\sf
-
-```{r prison2}
+```{r prison2, include=FALSE}
 prison <- fpp2::prisonLF %>%
   mutate(qtr=yearquarter(t)) %>%
   select(-t) %>%
   as_tsibble(index=qtr, key=id(state,gender,legal))
+```
+
+```{r prison2b}
 prison
 ```
 
@@ -248,53 +250,19 @@ options(width=60)
 ###
 Aggregation and reconciliation not yet implemented.
 
-# Equivalent methods
-## Equivalent methods: forecast $\longrightarrow$ fable
+# fable vs forecast
+## forecast $\longrightarrow$ fable
 
-\hspace*{-0.2cm}\begin{tabular}{l@{~$\longrightarrow$~}p{8cm}}
-\texttt{auto.arima} & \texttt{ARIMA} \\
-\texttt{ets} & \texttt{ETS} \\
-\texttt{tslm/lm} & \texttt{LM} \\
-\texttt{tbats} & \texttt{TBATS} \\
-\texttt{nnetar} & \texttt{NNAR} \\
-\texttt{stlm} & \texttt{STL \%>\%} \par
- \hspace*{0.2cm}\texttt{modelcomponents(} \par
- \hspace*{0.6cm}\texttt{ETS(seasadj),SNAIVE(season))}
-\end{tabular}
-
-
-###
- * All functions have a formula interface with automatic modelling if no formula provided.
- * All functions produce `mable` class objects.
- * Some of these functions not yet implemented
-
-## Equivalent methods: forecast $\longrightarrow$ fable
-\fontsize{14}{15}\sf
-
-\hspace*{-0.2cm}\begin{tabular}{l@{~$\longrightarrow$~}p{10cm}}
-\texttt{naive} &  \texttt{NAIVE \%>\% forecast} \\
-\texttt{snaive} &  \texttt{SNAIVE \%>\% forecast} \\
-\texttt{thetaf} &  \texttt{THETA \%>\% forecast} \\
-\texttt{stlf} &  \texttt{STL \%>\%} \par
- \hspace*{0.3cm}\texttt{modelcomponents(} \par
- \hspace*{0.6cm}\texttt{ETS(seasadj),SNAIVE(season)) \%>\%} \par
- \hspace*{0.3cm}\texttt{forecast} \\
-\texttt{hw} &  \texttt{HW \%>\% forecast} \\
-\texttt{holt} & \texttt{HOLT \%>\% forecast} \\
-\texttt{ses} &  \texttt{SES \%>\% forecast} \\
-\texttt{splinef} & \texttt{SPLINE \%>\% forecast} \\
-\texttt{croston} & \texttt{CROSTON \%>\% forecast}
-\end{tabular}
-
-###
- * `forecast` produces `fable` class objects.
+* All forecast models will have an equivalent fable MODEL.
+* All fable models produce `mable` class objects.
+* `forecast()` works on all `mable` object to produce `fable` class objects.
 
 # Extensibility
 
 ## Extending fable
 
 \begin{alertblock}{}
-fable simplifies the time series model development process
+fable simplifies the model development process
 \end{alertblock}
 
 ### Tools to easily create new fable models
