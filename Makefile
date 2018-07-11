@@ -10,6 +10,5 @@ all: $(PDFS)
 clean:
 	latexmk -c
 	rm -fv *.pdf
-	rm -fv *.tex
 	rm -rf *_cache
 	rm -rf *_files

@@ -1,7 +1,7 @@
 ---
 title: "Tidy Forecasting\\newline in R"
 author: "Rob J Hyndman"
-date: "useR2018"
+date: "useR2018: 13 July 2018"
 fontsize: 14pt
 output:
   beamer_presentation:
@@ -14,6 +14,7 @@ output:
     theme: metropolis
     includes:
       in_header: preamble.tex
+classoption: "aspectratio=169"
 editor_options:
   chunk_output_type: console
 ---
@@ -39,30 +40,31 @@ endpdf <- function()
 #  crop::dev.off.crop(fname)
 }
 set.seed(28052018)
-options(digits=3,width=60)
+options(digits=5,width=75)
 ```
 
 
 # Why change?
 
 ## forecast package
-\fontsize{13}{14}\sf
+\fontsize{14}{17}\sf
+\placefig{13}{.1}{width=2.7cm}{forecaststicker}
 
-\hspace*{-0.6cm}\begin{tabular}{rl}
-Pre 2003         & Private functions used for consulting projects \\
+\hspace*{-0.3cm}\begin{tabular}{rl}
+Pre 2003         & Private functions used for consulting \\
 July/August 2003 & \textbf{ets} and \textbf{thetaf} added\\
 %2003--2006      & Package available at robjhyndman.com \\
 August 2006      & \textcolor{orange}{v1.0} available on CRAN \\
 May 2007         & \textbf{auto.arima} added\\
 %July 2008       & JSS paper (Hyndman \& Khandakar)\\
 %September 2009  & \textcolor{orange}{v2.0}. Unbundled \\
-May 2010         & \textbf{arfima} added\\
+%May 2010         & \textbf{arfima} added\\
 Feb/March 2011   & \textbf{tslm}, \textbf{stlf}, \textbf{naive}, \textbf{snaive} added \\
 August 2011      & \textcolor{orange}{v3.0}. Box Cox transformations added\\
 December 2011    & \textbf{tbats} added\\
 April 2012       & Package moved to github\\
-November 2012    & \textcolor{orange}{v4.0}. \textbf{nnetar} added\\
-June 2013        & Major speed-up of \textbf{ets}\\
+%November 2012    & \textcolor{orange}{v4.0}. \textbf{nnetar} added\\
+%June 2013        & Major speed-up of \textbf{ets}\\
 %December 2015   & 264,000 package downloads in one month!\\
 February 2016    & \textcolor{orange}{v7.0}. Added ggplot2 graphics\\
 February 2017    & \textcolor{orange}{v8.0}. Added \textbf{checkresiduals}, \textbf{tsCV} and \textbf{\%>\%}\\
@@ -71,11 +73,12 @@ June 2018        & $\approx$ 100,000 package downloads per month
 \end{tabular}
 
 ## fable package
-\placefig{10}{.1}{width=1.7cm}{fablesticker}
+\fontsize{15}{20}\sf
+\placefig{13}{.1}{width=2.7cm}{fablesticker}
 
 \begin{alertblock}{}
 A replacement for the forecast package.
-\end{alertblock}
+\end{alertblock}\vspace*{0.5cm}
 
 ### Why change?
 
@@ -90,8 +93,9 @@ A replacement for the forecast package.
 # Model specification with fable
 
 ## Formula model specification
+\placefig{13}{.1}{width=2.7cm}{fablesticker}
 
-All modelling functions use a formula similar to `lm()` with automated modelling if RHS not specified.
+All modelling functions use a formula similar to `lm()`\newline with automated modelling if RHS not specified.
 
 ```{r, eval = FALSE, echo = TRUE}
 t(y) ~ {model specification}
@@ -109,7 +113,8 @@ t(y) ~ {model specification}
 # Example: Australian eating-out expenditure
 
 ## Example: Australian eating-out expenditure
-\fontsize{10}{10}\sf
+\placefig{13}{.1}{width=2.7cm}{tsibblesticker}
+\fontsize{11}{11}\sf\vspace*{0.25cm}
 
 ```{r auscafe2, echo=TRUE}
 library(tsibble)
@@ -119,7 +124,8 @@ library(tsibble)
 \vspace*{10cm}
 
 ## Example: Australian eating-out expenditure
-\fontsize{10}{10}\sf
+\placefig{13}{.1}{width=2.7cm}{fablesticker}
+\fontsize{11}{11}\sf\vspace*{0.25cm}
 
 ```{r auscafe3, echo=TRUE, dependson='auscafe2'}
 library(fable)
@@ -129,7 +135,8 @@ cafe %>% ARIMA(log(value) ~ pdq(2,1,1) + PDQ(2,1,2))
 \vspace*{10cm}
 
 ## Example: Australian eating-out expenditure
-\fontsize{10}{10}\sf
+\placefig{13}{.1}{width=2.7cm}{fablesticker}
+\fontsize{11}{11}\sf\vspace*{0.25cm}
 
 ```{r auscafe4, echo=TRUE, dependson='auscafe2'}
 cafe %>% ARIMA(log(value) ~ pdq(2,1,1) + PDQ(2,1,2)) %>%
@@ -139,7 +146,8 @@ cafe %>% ARIMA(log(value) ~ pdq(2,1,1) + PDQ(2,1,2)) %>%
 \vspace*{10cm}
 
 ## Example: Australian eating-out expenditure
-\fontsize{10}{10}\sf
+\placefig{13}{.1}{width=2.7cm}{fablesticker}
+\fontsize{11}{11}\sf\vspace*{0.25cm}
 
 ```{r auscafe5, echo=TRUE, dependson='auscafe2'}
 cafe %>% ARIMA(log(value) ~ pdq(2,1,1) + PDQ(2,1,2)) %>%
@@ -149,17 +157,8 @@ cafe %>% ARIMA(log(value) ~ pdq(2,1,1) + PDQ(2,1,2)) %>%
 \vspace*{10cm}
 
 ## Example: Australian eating-out expenditure
-\fontsize{10}{10}\sf
-
-```{r auscafe6, echo=TRUE, dependson='auscafe2'}
-cafe %>% ARIMA(log(value) ~ pdq(2,1,1) + PDQ(2,1,2)) %>%
-  forecast() %>% summary()
-```
-
-\vspace*{10cm}
-
-## Example: Australian eating-out expenditure
-\fontsize{10}{10}\sf
+\placefig{13}{.1}{width=2.7cm}{fablesticker}
+\fontsize{11}{11}\sf\vspace*{0.25cm}
 
 ```{r auscafe6a, echo=TRUE, dependson='auscafe2'}
 cafe %>% ARIMA(log(value) ~ pdq(2,1,1) + PDQ(2,1,2)) %>%
@@ -169,9 +168,10 @@ cafe %>% ARIMA(log(value) ~ pdq(2,1,1) + PDQ(2,1,2)) %>%
 \vspace*{10cm}
 
 ## Example: Australian eating-out expenditure
-\fontsize{10}{10}\sf
+\placefig{13}{.1}{width=2.7cm}{fablesticker}
+\fontsize{11}{11}\sf\vspace*{0.25cm}
 
-```{r auscafe7, echo=TRUE, dependson='auscafe2', fig.height=3.4}
+```{r auscafe7, echo=TRUE, dependson='auscafe2', fig.height=2.6}
 cafe %>% ARIMA(log(value) ~ pdq(2,1,1) + PDQ(2,1,2)) %>%
   forecast() %>% autoplot()
 ```
@@ -180,7 +180,8 @@ cafe %>% ARIMA(log(value) ~ pdq(2,1,1) + PDQ(2,1,2)) %>%
 
 # Example: Half-hourly electricity demand
 ## Example: Half-hourly electricity demand
-\fontsize{10}{10}\sf
+\placefig{13}{.1}{width=2.7cm}{fablesticker}
+\fontsize{11}{11}\sf\vspace*{0.25cm}
 
 ```{r elecdemandsetup, echo=FALSE}
 elecdemand <- as_tsibble(fpp2::elecdemand) %>%
@@ -194,13 +195,17 @@ elecdemand
 \vspace*{10cm}
 
 ## Example: Half-hourly electricity demand
-\fontsize{10}{9.5}\sf
+\placefig{13}{.1}{width=2.7cm}{fablesticker}
+\fontsize{11}{11}\sf\vspace*{0.25cm}
 
 ```{r elecdemand2, dependson="elecdemandsetup"}
 fit2 <- ARIMA(elecdemand,
   Demand ~ Temperature + I(Temperature^2) + WorkDay)
 summary(fit2)
 ```
+
+\pause\vspace*{-1.7cm}
+
 ```r
 forecast(fit2, newdata=elecdemandfuture) %>% autoplot()
 ```
@@ -208,7 +213,8 @@ forecast(fit2, newdata=elecdemandfuture) %>% autoplot()
 # Example: Australian prison population
 
 ## Example: Australian prison population
-\fontsize{10}{10}\sf
+\placefig{13}{.1}{width=2.7cm}{fablesticker}
+\fontsize{11}{11}\sf\vspace*{0.25cm}
 
 ```{r prison2, include=FALSE}
 prison <- fpp2::prisonLF %>%
@@ -222,7 +228,8 @@ prison
 ```
 
 ## Example: Australian prison population
-\fontsize{10}{10}\sf
+\placefig{13}{.1}{width=2.7cm}{fablesticker}
+\fontsize{11}{11}\sf\vspace*{0.25cm}
 
 ```{r prison3, dependson='prison2'}
 prison %>% ETS(count)
@@ -231,7 +238,8 @@ prison %>% ETS(count)
 \vspace*{10cm}
 
 ## Example: Australian prison population
-\fontsize{10}{10}\sf
+\placefig{13}{.1}{width=2.7cm}{fablesticker}
+\fontsize{11}{10.7}\sf\vspace*{0.25cm}
 
 ```{r width1, include=FALSE}
 options(width=151)
@@ -246,27 +254,28 @@ prison %>% ETS(count) %>% forecast()
 options(width=60)
 ```
 
-\fontsize{12}{13}\sf
+\pause\fontsize{12}{12}\sf
 ###
 Aggregation and reconciliation not yet implemented.
 
 # Moving from forecast to fable
 ##  Moving from forecast to fable
 
-\placefig{1}{1.5}{width=3.7cm}{forecaststicker}
-\placefig{8}{1.5}{width=3.7cm}{fablesticker}
-\placefig{5.5}{3}{width=2cm}{arrow}
+\placefig{2}{1.5}{width=3.3cm}{forecaststicker}
+\placefig{8.5}{1.5}{width=3.3cm}{fablesticker}
+\placefig{6}{3}{width=2cm}{arrow}
 
-\vspace*{4.5cm}
+\vspace*{4.3cm}
 
-* All **forecast** `model()` functions will have an equivalent **fable** `MODEL()` function.
+* All **forecast** `model()` functions will have equivalent **fable** `MODEL()` functions.
 * All **fable** models produce `mable` class objects.
-* `forecast()` works on all `mable` objects to produce `fable` class objects.
+* `forecast()` works on `mable` objects to produce `fable` objects.
 * **fable** will also replace the **hts** package
 
 # Extensibility
 
 ## Extending fable
+\placefig{13}{.1}{width=2.7cm}{fablesticker}
 
 \begin{alertblock}{}
 fable simplifies the model development process
@@ -286,9 +295,9 @@ fable simplifies the model development process
 
 ## More information
 \fontsize{12.8}{15}\sf
-\placefig{8}{.1}{width=1.7cm}{tsibblesticker}
-\placefig{10}{.1}{width=1.7cm}{fablesticker}
-\vspace*{.5cm}
+\placefig{11}{.1}{width=2.3cm}{tsibblesticker}
+\placefig{13.5}{.1}{width=2.3cm}{fablesticker}
+\vspace*{.0cm}
 
 ###
 ```r

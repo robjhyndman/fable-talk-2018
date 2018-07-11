@@ -200,7 +200,7 @@ prison %>% ETS(count)
 \fontsize{9}{11}\sf
 
 ```{r width1, include=FALSE}
-options(width=151)
+options(width=150)
 ```
 
 ```{r prison4, dependson=c('prison2','width1')}
