@@ -234,7 +234,7 @@ prison %>% ETS(count)
 \fontsize{10}{10}\sf
 
 ```{r width1, include=FALSE}
-options(width=150)
+options(width=151)
 ```
 
 ```{r prison4, dependson=c('prison2','width1')}
@@ -250,12 +250,19 @@ options(width=60)
 ###
 Aggregation and reconciliation not yet implemented.
 
-# fable vs forecast
-## forecast $\longrightarrow$ fable
+# Moving from forecast to fable
+##  Moving from forecast to fable
 
-* All forecast models will have an equivalent fable MODEL.
-* All fable models produce `mable` class objects.
-* `forecast()` works on all `mable` object to produce `fable` class objects.
+\placefig{1}{1.5}{width=3.7cm}{forecaststicker}
+\placefig{8}{1.5}{width=3.7cm}{fablesticker}
+\placefig{5.5}{3}{width=2cm}{arrow}
+
+\vspace*{4.5cm}
+
+* All **forecast** `model()` functions will have an equivalent **fable** `MODEL()` function.
+* All **fable** models produce `mable` class objects.
+* `forecast()` works on all `mable` objects to produce `fable` class objects.
+* **fable** will also replace the **hts** package
 
 # Extensibility
 
